@@ -1,0 +1,33 @@
+{
+  "name": "@woubuc/multimap",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "dist/MultiMap.js",
+  "types": "dist/MultiMap.d.ts",
+  "author": "Wouter Buckens <wou.buc@gmail.com>",
+  "homepage": "https://github.com/woubuc/multimap/blob/master/README.md",
+  "repository": "github:woubuc/multimap",
+  "bugs": "https://github.com/woubuc/multimap/issues",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "map",
+    "array",
+    "dictionary",
+    "object",
+    "key",
+    "value",
+    "collection",
+    "collections",
+    "wrapper",
+    "extension"
+  ]
+}
