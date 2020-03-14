@@ -1,4 +1,7 @@
 # MultiMap
+
+[![npm](https://img.shields.io/npm/v/@woubuc/multimap)](https://www.npmjs.com/package/@woubuc/multimap)
+
 Wrapper around `Map` with utility functions for maps containing an array of items for each key.
 
 ### Usage
