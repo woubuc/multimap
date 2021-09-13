@@ -26,7 +26,7 @@ sets.add('foo', 1); // foo: Set(1)
 sets.add('foo', 2); // foo: Set(1, 2)
 ```
 
-[View the full API](./docs/API.md)
+[View the full API docs](http://multimap.woubuc.be/modules.html)
 
 ### License
 [MIT license](./LICENSE)
