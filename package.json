@@ -1,7 +1,7 @@
 {
   "name": "@woubuc/multimap",
   "description": "Wrapper around Map with utility functions for maps containing an array of items for each key.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
