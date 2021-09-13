@@ -1,18 +1,18 @@
 /**
- * Map wrapper for a map containing an array
+ * Map wrapper for a map containing a set
  */
-export default class MultiMap<K, V> {
+export class SetMap<K, V> {
 
 	/** The default constructor for this type */
-	public static [Symbol.species] = MultiMap;
+	public static [Symbol.species] = SetMap;
 
 	/** Custom string tag implementation */
-	public static [Symbol.toStringTag] = '[object MultiMap]';
+	public static [Symbol.toStringTag] = '[object SetMap]';
 
 
 
 	/** The internal map */
-	private map = new Map<K, V[]>();
+	private map = new Map<K, Set<V>>();
 
 	/** The default map iterator function is entries() */
 	public [Symbol.iterator] = this.entries;
@@ -30,8 +30,8 @@ export default class MultiMap<K, V> {
 	 */
 	public get flatSize() : number {
 		let count = 0;
-		for (let array of this.values()) {
-			count += array.length;
+		for (let set of this.values()) {
+			count += set.size;
 		}
 
 		return count;
@@ -41,23 +41,23 @@ export default class MultiMap<K, V> {
 	/**
 	 * Gets the values of an entry
 	 *
-	 * If the key is not set, returns an empty array
+	 * If the key is not set, returns an empty set
 	 */
-	public get(key : K) : V[] {
-		let array = this.map.get(key);
-		if (array === undefined) return [];
-		return array;
+	public get(key : K) : Set<V> {
+		let set = this.map.get(key);
+		if (set === undefined) return new Set();
+		return set;
 	}
 
 	/**
 	 * Sets the values of an entry
 	 *
-	 * This overwrites any previous contents of the map.
+	 * This overwrites any previous contents of the map at this key.
 	 *
 	 * @param key   - Key of the entry
-	 * @param value - The array to set
+	 * @param value - The set to set
 	 */
-	public set(key : K, value : V[]) {
+	public set(key : K, value : Set<V>) {
 		this.map.set(key, value);
 	}
 
@@ -73,31 +73,35 @@ export default class MultiMap<K, V> {
 	}
 
 	/**
-	 * Adds one or more items to the end of the array of values of an entry
+	 * Adds one or more items to the set
 	 *
 	 * If the key doesn't exist, it is created.
 	 *
 	 * @param key    - Key of the entry
 	 * @param values - The value(s) to push to this entry
 	 */
-	public push(key : K, ...values : V[]) {
-		let arr = this.get(key);
-		arr.push(...values);
-		this.set(key, arr);
+	public add(key : K, ...values : V[]) {
+		let set = this.get(key);
+		for (let value of values) {
+			set.add(value);
+		}
+		this.set(key, set);
 	}
 
 	/**
-	 * Adds one or more items to the front of the array of values of an entry
+	 * Removes one or more items from the set
 	 *
 	 * If the key doesn't exist, it is created.
 	 *
 	 * @param key    - Key of the entry
 	 * @param values - The value(s) to push to this entry
 	 */
-	public unshift(key : K, ...values : V[]) {
-		let arr = this.get(key);
-		arr.unshift(...values);
-		this.set(key, arr);
+	public remove(key : K, ...values : V[]) {
+		let set = this.get(key);
+		for (let value of values) {
+			set.delete(value);
+		}
+		this.set(key, set);
 	}
 
 
@@ -134,7 +138,7 @@ export default class MultiMap<K, V> {
 	 *
 	 * @returns An iterator with the values of each element in the map
 	 */
-	public values() : IterableIterator<V[]> {
+	public values() : IterableIterator<Set<V>> {
 		return this.map.values();
 	}
 
@@ -147,8 +151,8 @@ export default class MultiMap<K, V> {
 	 * @returns An iterator with the values of each element in the map
 	 */
 	public *flatValues() : IterableIterator<V> {
-		for (let array of this.values()) {
-			for (let value of array) {
+		for (let set of this.values()) {
+			for (let value of set.values()) {
 				yield value;
 			}
 		}
@@ -159,7 +163,7 @@ export default class MultiMap<K, V> {
 	 *
 	 * @returns An iterator with the key/value pairs of each element in the map
 	 */
-	public entries() : IterableIterator<[K, V[]]> {
+	public entries() : IterableIterator<[K, Set<V>]> {
 		return this.map.entries();
 	}
 
@@ -167,14 +171,14 @@ export default class MultiMap<K, V> {
 	 * Iterates over flat key/value pairs of the map
 	 *
 	 * This method flattens the entries, so the iterator may contain the same
-	 * key multiple times. It will also skip over empty arrays, since they
+	 * key multiple times. It will also skip over empty sets, since they
 	 * contain no items.
 	 *
 	 * @returns An iterator with the flattened key/value pairs
 	 */
 	public *flatEntries() : IterableIterator<[K, V]> {
-		for (let [key, array] of this.entries()) {
-			for (let value of array) {
+		for (let [key, set] of this.entries()) {
+			for (let value of set.values()) {
 				yield [key, value];
 			}
 		}
@@ -186,7 +190,7 @@ export default class MultiMap<K, V> {
 	 *
 	 * @param callback - Function to execute for each entry
 	 */
-	public forEach(callback : (value : V[], key : K, map : MultiMap<K, V>) => void) {
+	public forEach(callback : (value : Set<V>, key : K, map : SetMap<K, V>) => void) {
 		this.map.forEach((value, key) => callback(value, key, this));
 	}
 
@@ -194,14 +198,14 @@ export default class MultiMap<K, V> {
 	 * Executes a callback for each flattened entry in the map
 	 *
 	 * This method flattens the entries, so the iterator may contain the same
-	 * key multiple times. It will also skip over empty arrays, since they
+	 * key multiple times. It will also skip over empty sets, since they
 	 * contain no items.
 	 *
 	 * @param callback - Function to execute for each flattened entry
 	 */
-	public flatForEach(callback : (value : V, key : K, map : MultiMap<K, V>) => void) {
-		this.map.forEach((array, key) => {
-			for (let value of array) {
+	public flatForEach(callback : (value : V, key : K, map : SetMap<K, V>) => void) {
+		this.map.forEach((set, key) => {
+			for (let value of set.values()) {
 				callback(value, key, this)
 			}
 		});
