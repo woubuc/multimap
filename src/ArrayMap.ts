@@ -19,7 +19,7 @@ import { BaseMap } from './BaseMap';
  * @typeParam TKey   - The keys in the map
  * @typeParam TValue - The individual items in the arrays
  */
-export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
+export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]> {
 	/** @hidden The default constructor for this type */
 	public static [Symbol.species] = ArrayMap;
 
@@ -31,7 +31,7 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 	 *
 	 * If no entry exists for `key`, creates a new array.
 	 */
-	public push(key : TKey, ...values : TValue[]) {
+	public push(key: TKey, ...values: TValue[]) {
 		let arr = this.get(key);
 		arr.push(...values);
 		this.set(key, arr);
@@ -42,7 +42,7 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 	 *
 	 * If no entry exists for `key`, creates a new array.
 	 */
-	public pop(key : TKey): TValue | undefined {
+	public pop(key: TKey): TValue | undefined {
 		let arr = this.get(key);
 		let value = arr.pop();
 		this.set(key, arr);
@@ -66,7 +66,7 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 	 *
 	 * If no entry exists for `key`, creates a new array.
 	 */
-	public unshift(key : TKey, ...values : TValue[]) {
+	public unshift(key: TKey, ...values: TValue[]) {
 		let arr = this.get(key);
 		arr.unshift(...values);
 		this.set(key, arr);
@@ -100,7 +100,7 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 
 
 	/** @override */
-	public get flatSize() : number {
+	public get flatSize(): number {
 		let count = 0;
 		for (let array of this.values()) {
 			count += array.length;
@@ -110,12 +110,12 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 	}
 
 	/** @override */
-	public get(key : TKey) : TValue[] {
+	public get(key: TKey): TValue[] {
 		return this.map.get(key) ?? [];
 	}
 
 	/** @override */
-	public *flatValues() : IterableIterator<TValue> {
+	public* flatValues(): IterableIterator<TValue> {
 		for (let array of this.values()) {
 			for (let value of array) {
 				yield value;
@@ -124,7 +124,7 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]>{
 	}
 
 	/** @override */
-	public *flatEntries() : IterableIterator<[TKey, TValue]> {
+	public* flatEntries(): IterableIterator<[TKey, TValue]> {
 		for (let [key, array] of this.entries()) {
 			for (let value of array) {
 				yield [key, value];

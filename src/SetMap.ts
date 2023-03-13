@@ -18,7 +18,7 @@ import { BaseMap } from './BaseMap';
  * @typeParam TKey   - The keys in the map
  * @typeParam TValue - The individual entries in the sets
  */
-export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
+export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>> {
 	/** @hidden The default constructor for this type */
 	public static [Symbol.species] = SetMap;
 
@@ -31,7 +31,7 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
 	 *
 	 * If no entry exists for `key`, creates a new set.
 	 */
-	public add(key : TKey, value : TValue) {
+	public add(key: TKey, value: TValue) {
 		let set = this.get(key);
 		set.add(value);
 		this.set(key, set);
@@ -42,7 +42,7 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
 	 *
 	 * If no entry exists for `key`, creates a new set.
 	 */
-	public deleteIn(key : TKey, value : TValue) {
+	public deleteIn(key: TKey, value: TValue) {
 		let set = this.get(key);
 		set.delete(value);
 		this.set(key, set);
@@ -50,7 +50,7 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
 
 
 	/** @override */
-	public get flatSize() : number {
+	public get flatSize(): number {
 		let count = 0;
 		for (let set of this.values()) {
 			count += set.size;
@@ -60,12 +60,12 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
 	}
 
 	/** @override */
-	public get(key : TKey) : Set<TValue> {
+	public get(key: TKey): Set<TValue> {
 		return this.map.get(key) ?? new Set();
 	}
 
 	/** @override */
-	public *flatValues() : IterableIterator<TValue> {
+	public* flatValues(): IterableIterator<TValue> {
 		for (let set of this.values()) {
 			for (let value of set.values()) {
 				yield value;
@@ -74,7 +74,7 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>>{
 	}
 
 	/** @override */
-	public *flatEntries() : IterableIterator<[TKey, TValue]> {
+	public* flatEntries(): IterableIterator<[TKey, TValue]> {
 		for (let [key, set] of this.entries()) {
 			for (let value of set.values()) {
 				yield [key, value];
