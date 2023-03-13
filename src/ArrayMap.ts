@@ -26,6 +26,11 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]> {
 	/** @hidden Custom string tag implementation */
 	public static [Symbol.toStringTag] = '[object ArrayMap]';
 
+	/** @override */
+	public get(key: TKey): TValue[] {
+		return this.map.get(key) ?? [];
+	}
+
 	/**
 	 * Adds one or more items to the end of the array at `key`.
 	 *
@@ -107,11 +112,6 @@ export class ArrayMap<TKey, TValue> extends BaseMap<TKey, TValue, TValue[]> {
 		}
 
 		return count;
-	}
-
-	/** @override */
-	public get(key: TKey): TValue[] {
-		return this.map.get(key) ?? [];
 	}
 
 	/** @override */

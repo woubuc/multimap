@@ -13,11 +13,16 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
-    "build-docs": "typedoc --cleanOutputDir --excludePrivate --excludeProtected src/index.ts",
-    "prepublishOnly": "tsc"
+    "clean": "rimraf --glob dist/* docs/* coverage/* .nyc_output/*",
+    "build": "pnpm clean && tsc && rimraf --glob dist/**/*.spec.*",
+    "build-docs": "pnpm clean && typedoc --excludePrivate --excludeProtected src/index.ts",
+    "prepack": "pnpm build",
+    "test": "pnpm clean && tsc && tap --reporter=classic --coverage-report=html dist/**/*.spec.js"
   },
   "devDependencies": {
+    "@types/tap": "^15.0.8",
+    "rimraf": "^4.4.0",
+    "tap": "^16.3.4",
     "typedoc": "^0.23.26",
     "typescript": "^4.4.3"
   },

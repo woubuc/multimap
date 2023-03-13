@@ -25,6 +25,10 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>> {
 	/** @hidden Custom string tag implementation */
 	public static [Symbol.toStringTag] = '[object SetMap]';
 
+	/** @override */
+	public get(key: TKey): Set<TValue> {
+		return this.map.get(key) ?? new Set();
+	}
 
 	/**
 	 * Adds an item to the set at `key`.
@@ -57,11 +61,6 @@ export class SetMap<TKey, TValue> extends BaseMap<TKey, TValue, Set<TValue>> {
 		}
 
 		return count;
-	}
-
-	/** @override */
-	public get(key: TKey): Set<TValue> {
-		return this.map.get(key) ?? new Set();
 	}
 
 	/** @override */
