@@ -7,7 +7,7 @@ Wrappers around `Map` with utility functions for maps containing arrays or sets 
 ### Usage
 Install the package into your dependencies
 ```
-yarn add @woubuc/multimap
+pnpm add @woubuc/multimap
 ```
 
 Use the map
