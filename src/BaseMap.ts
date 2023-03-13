@@ -95,7 +95,7 @@ export abstract class BaseMap<TKey, TValue, TCollection> {
 	/**
 	 * Executes a callback for each entry in the map
 	 */
-	public forEach(callback : (value : TCollection, key : TKey, map : this) => void) {
+	public forEach(callback: (value: TCollection, key: TKey, map: this) => void) {
 		this.map.forEach((value, key) => {
 			callback(value, key, this);
 		});
@@ -107,7 +107,7 @@ export abstract class BaseMap<TKey, TValue, TCollection> {
 	 * This method flattens the entries, so the iterator may contain the same
 	 * key multiple times. It will also skip over empty collections.
 	 */
-	public flatForEach(callback : (value : TValue, key : TKey, map : this) => void) {
+	public flatForEach(callback: (value: TValue, key: TKey, map: this) => void) {
 		for (let [key, value] of this.flatEntries()) {
 			callback(value, key, this);
 		}
