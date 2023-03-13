@@ -1,14 +1,17 @@
 {
   "name": "@woubuc/multimap",
-  "description": "Wrapper around Map with utility functions for maps containing an array of items for each key.",
   "version": "2.0.1",
+  "description": "Wrapper around Map with utility functions for maps containing an array of items for each key.",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "author": "Wouter Buckens <wou.buc@gmail.com>",
   "homepage": "https://github.com/woubuc/multimap/blob/master/README.md",
   "repository": "github:woubuc/multimap",
   "bugs": "https://github.com/woubuc/multimap/issues",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "build": "tsc",
     "build-docs": "typedoc --cleanOutputDir --excludePrivate --excludeProtected src/index.ts",
@@ -18,19 +21,16 @@
     "typedoc": "^0.23.26",
     "typescript": "^4.4.3"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "keywords": [
-    "map",
     "array",
-    "dictionary",
-    "object",
-    "key",
-    "value",
     "collection",
     "collections",
-    "wrapper",
-    "extension"
+    "dictionary",
+    "extension",
+    "key",
+    "map",
+    "object",
+    "value",
+    "wrapper"
   ]
 }
